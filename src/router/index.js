@@ -18,7 +18,7 @@ const routes = [
     })
   },
   {
-    path: '/event/:id',
+    path: '/events/:id',
     name: 'EventLayout',
     props: true,
     component: EventLayout,
@@ -40,11 +40,28 @@ const routes = [
       }
     ]
   },
+  // 將舊的 event 網址導向 events
+  // 方法一
+  // {
+  //   path: '/event/:id',
+  //   redirect: () => ({ name: 'EventDetails' }),
+  //   children: [
+  //     { path: 'register', redirect: () => ({ name: 'EventRegister' }) },
+  //     { path: 'edit', redirect: () => ({ name: 'EventEdit' }) }
+  //   ]
+  // },
 
+  // 方法二 通配符 (.*)
+  // 將匹配字詞後面的所有內容 /event/ 放入 /events/，並且涵蓋了所有子路由
   {
-    path: '/about',
+    path: '/event/:passParams(.*)',
+    redirect: to => ({ path: `/events/${to.params.passParams}` })
+  },
+  {
+    path: '/about-us',
     name: 'About',
-    component: About
+    component: About,
+    alias: '/about' // 輸入 about, 也顯示 about-us 組件內容, 網址不會改成 /about-us
   }
 ]
 
