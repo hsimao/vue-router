@@ -4,8 +4,9 @@ import EventDetails from '../views/event/Details.vue'
 import EventLayout from '../views/event/Layout.vue'
 import EventRegister from '../views/event/Register.vue'
 import EventEdit from '../views/event/Edit.vue'
-
 import About from '../views/About.vue'
+import NotFound from '../views/NotFound.vue'
+import NetworkError from '../views/NetworkError.vue'
 
 const routes = [
   {
@@ -62,6 +63,18 @@ const routes = [
     name: 'About',
     component: About,
     alias: '/about' // 輸入 about, 也顯示 about-us 組件內容, 網址不會改成 /about-us
+  },
+  { path: '/:cathAll(.*)', name: 'NotFound', component: NotFound },
+  {
+    path: '/404/:resource',
+    name: '404Resource',
+    component: NotFound,
+    props: true
+  },
+  {
+    path: '/network-error',
+    name: 'NetworkError',
+    component: NetworkError
   }
 ]
 
