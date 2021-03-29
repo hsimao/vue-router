@@ -57,6 +57,18 @@ export default {
       })
       .finally(NProgress.done())
   },
+  beforeRouteUpdate(routeTo) {
+    NProgress.start()
+    EventService.getEvents(2, parseInt(routeTo.query.page) || 1)
+      .then(response => {
+        this.events = response.data
+        this.totalEvents = response.headers['x-total-count']
+      })
+      .catch(() => {
+        return { name: 'NetworkError' }
+      })
+      .finally(NProgress.done())
+  },
   computed: {
     hasNextPage() {
       const totalPages = Math.ceil(this.totalEvents / this.prePage)
